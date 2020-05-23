@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/widgets/CoursesListBlockOneWidget.dart';
@@ -116,6 +117,35 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(appBarTitle),
         backgroundColor: Color(0xFFC96FF7),
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        index: 0,
+        height: 70.0,
+        items: <Widget>[
+          Icon(Icons.list, size: 35),
+          Icon(Icons.search, size: 35),
+          Icon(Icons.library_books, size: 35),
+          Icon(Icons.account_circle, size: 35),
+        ],
+        color: Color(0xFFC96FF7),
+        buttonBackgroundColor: Color(0xFFC96FF7),
+        backgroundColor: Colors.cyan.withAlpha(10),
+        animationCurve: Curves.easeInOut,
+        animationDuration: Duration(milliseconds: 200),
+        onTap: (index) {
+          setState(() {
+            if (index == 3) {
+              appBarTitle = "My Account";
+            } else if (index == 1) {
+              appBarTitle = "Search For Courses";
+            } else if (index == 2) {
+              appBarTitle = "My Courses";
+            } else {
+              appBarTitle = "The Professor";
+            }
+          });
+          print(index);
+        },
       ),
       body: SingleChildScrollView(
         child: Container(

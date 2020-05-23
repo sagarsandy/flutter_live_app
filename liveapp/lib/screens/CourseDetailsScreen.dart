@@ -130,24 +130,25 @@ class CourseDetailsScreen extends StatelessWidget {
       body: Container(
         color: Colors.cyan.withAlpha(10),
         width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            CourseDetailsCoverWidget(course),
-            Padding(
-              padding: EdgeInsets.only(left: 5, top: 15),
-              child: Text(
-                "Curriculum",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CourseDetailsCoverWidget(course),
+              Padding(
+                padding: EdgeInsets.only(left: 5, top: 15),
+                child: Text(
+                  "Curriculum",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            SingleChildScrollView(
-              child: Container(
+              Container(
                 height: 540,
                 child: ListView.builder(
+                  padding: EdgeInsets.all(2),
                   itemCount: _courseSections.length,
                   itemBuilder: (context, i) {
                     return Card(
@@ -172,8 +173,8 @@ class CourseDetailsScreen extends StatelessWidget {
                   },
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
