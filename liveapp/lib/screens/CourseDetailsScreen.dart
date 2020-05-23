@@ -128,22 +128,25 @@ class CourseDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.cyan.withAlpha(10),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             CourseDetailsCoverWidget(course),
             Padding(
-              padding: EdgeInsets.only(left: 5, top: 5),
+              padding: EdgeInsets.only(left: 5, top: 15),
               child: Text(
                 "Curriculum",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SingleChildScrollView(
               child: Container(
-                color: Colors.red,
-                height: 500,
+                height: 540,
                 child: ListView.builder(
                   itemCount: _courseSections.length,
                   itemBuilder: (context, i) {
