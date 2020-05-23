@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Course> coursesData = [];
 
     if (response.statusCode == 200) {
-      print(response);
+//      print(response);
       var jsonData = json.decode(response.body);
 
       for (var c in jsonData) {
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var appBarTitle = "The Professor";
   @override
   void initState() {
-//    getTrendingCourses();
+    getTrendingCourses();
     super.initState();
   }
 
@@ -122,10 +122,10 @@ class _MyHomePageState extends State<MyHomePage> {
         index: 0,
         height: 70.0,
         items: <Widget>[
-          Icon(Icons.list, size: 35),
-          Icon(Icons.search, size: 35),
-          Icon(Icons.library_books, size: 35),
-          Icon(Icons.account_circle, size: 35),
+          Icon(Icons.list, size: 30),
+          Icon(Icons.search, size: 30),
+          Icon(Icons.library_books, size: 30),
+          Icon(Icons.account_circle, size: 30),
         ],
         color: Color(0xFFC96FF7),
         buttonBackgroundColor: Color(0xFFC96FF7),
