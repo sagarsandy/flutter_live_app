@@ -8,7 +8,7 @@ import 'package:liveapp/widgets/CourseDetailsCoverWidget.dart';
 class CourseDetailsScreen extends StatelessWidget {
   final Course course;
   CourseDetailsScreen(this.course);
-  List<Section> _courseSections = [
+  final List<Section> _courseSections = [
     Section(id: 1, title: "Introduction to symfony", contents: [
       Content(
           id: 1,

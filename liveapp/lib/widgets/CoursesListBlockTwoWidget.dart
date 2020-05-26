@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:liveapp/models/Course.dart';
-import 'package:liveapp/widgets/CourseBlockOneWidget.dart';
 import 'package:liveapp/widgets/CourseBlockTwoWidget.dart';
 
 class CoursesListBlockTwoWidget extends StatelessWidget {

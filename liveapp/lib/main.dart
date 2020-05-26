@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:liveapp/models/Course.dart';
+import 'package:liveapp/screens/SearchResultsScreen.dart';
 import 'package:liveapp/widgets/CoursesListBlockOneWidget.dart';
 import 'package:http/http.dart';
 import 'package:liveapp/widgets/CoursesListBlockTwoWidget.dart';
@@ -117,14 +118,21 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(appBarTitle),
         backgroundColor: Color(0xFFC96FF7),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: SearchCourses());
+            },
+          ),
+        ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
         index: 0,
         height: 70.0,
         items: <Widget>[
-          Icon(Icons.list, size: 30),
-          Icon(Icons.search, size: 30),
-          Icon(Icons.library_books, size: 30),
+          Icon(Icons.home, size: 30),
+          Icon(Icons.shopping_cart, size: 30),
           Icon(Icons.account_circle, size: 30),
         ],
         color: Color(0xFFC96FF7),
@@ -134,11 +142,9 @@ class _MyHomePageState extends State<MyHomePage> {
         animationDuration: Duration(milliseconds: 200),
         onTap: (index) {
           setState(() {
-            if (index == 3) {
-              appBarTitle = "My Account";
+            if (index == 2) {
+              appBarTitle = "My Profile";
             } else if (index == 1) {
-              appBarTitle = "Search For Courses";
-            } else if (index == 2) {
               appBarTitle = "My Courses";
             } else {
               appBarTitle = "The Professor";
@@ -222,5 +228,103 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+}
+
+class SearchCourses extends SearchDelegate<String> {
+  @override
+  // TODO: implement searchFieldLabel
+  String get searchFieldLabel => "Enter a title";
+  @override
+  // TODO: implement textInputAction
+  TextInputAction get textInputAction => TextInputAction.search;
+
+  final categories = [
+    "Select",
+    "Development",
+    "Marketing",
+    "Productivity",
+    "Business",
+    "Accounting",
+    "LifeStyle",
+    "Photography",
+    "Music",
+    "Health",
+    "Productivity",
+  ];
+
+  final recentCategories = [
+    "Select",
+    "Development",
+    "Marketing",
+    "Productivity",
+    "Business",
+  ];
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = "";
+        },
+      ),
+//      IconButton(
+//        icon: Icon(Icons.search),
+//        onPressed: () {
+//          print(query);
+//        },
+//      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
+        onPressed: () {
+          close(context, null);
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+//    final suggestionList = query.isEmpty ? recentCategories : categories;
+    final suggestionList = categories;
+
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return ListTile(
+            title: Text("Or, Select a Category"),
+          );
+        } else {
+          return ListTile(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      SearchResultsScreen(suggestionList[index])));
+            },
+            leading: Icon(Icons.location_city),
+            title: Text(suggestionList[index]),
+          );
+        }
+      },
+      itemCount: suggestionList.length,
+    );
+  }
+
+  @override
+  void showResults(BuildContext context) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => SearchResultsScreen(query)));
   }
 }
