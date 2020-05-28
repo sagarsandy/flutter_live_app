@@ -51,11 +51,8 @@ class CourseBlockOneWidget extends StatelessWidget {
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(20.0),
                     ),
-                    child: Hero(
-                      tag: 'listing_details' + course.id.toString(),
-                      child: Image.network(course.image,
-                          width: 230, height: 120, fit: BoxFit.fill),
-                    ),
+                    child: Image.network(course.image,
+                        width: 230, height: 120, fit: BoxFit.fill),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5, top: 2),

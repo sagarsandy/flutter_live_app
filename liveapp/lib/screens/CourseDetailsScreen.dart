@@ -127,10 +127,10 @@ class CourseDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.cyan.withAlpha(10),
-        width: double.infinity,
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.cyan.withAlpha(10),
+          width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -148,6 +148,7 @@ class CourseDetailsScreen extends StatelessWidget {
               Container(
                 height: 540,
                 child: ListView.builder(
+//                  physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.all(2),
                   itemCount: _courseSections.length,
                   itemBuilder: (context, i) {

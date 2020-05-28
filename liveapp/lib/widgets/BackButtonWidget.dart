@@ -11,12 +11,12 @@ class BackButtonWidget extends StatelessWidget {
         },
         icon: Icon(
           Icons.arrow_back,
-          color: Colors.black,
+          color: Colors.white,
         ),
         label: Text(
           "Back",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
       ),

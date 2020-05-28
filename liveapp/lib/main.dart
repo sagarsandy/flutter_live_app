@@ -59,6 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
       setState(() {
         _trendingCourses = coursesData;
+//        _categoryCourses1 = coursesData;
+//        _categoryCourses1.shuffle();
+//        _categoryCourses2 = coursesData;
+//        _categoryCourses2.shuffle();
+//        _categoryCourses3 = coursesData;
+//        _categoryCourses3.shuffle();
       });
     } else {
       print("Something went wrong");
@@ -71,6 +77,12 @@ class _MyHomePageState extends State<MyHomePage> {
     getTrendingCourses();
     super.initState();
   }
+
+//  List<Course> _categoryCourses1 = [];
+//
+//  List<Course> _categoryCourses2 = [];
+//
+//  List<Course> _categoryCourses3 = [];
 
   List<Course> _trendingCourses = [
     Course(

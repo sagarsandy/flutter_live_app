@@ -35,8 +35,7 @@ class SearchResultsScreen extends StatelessWidget {
       id: 4,
       image: "https://i.picsum.photos/id/4/150/150.jpg",
       price: 41,
-      title:
-          "Web development bootcamp by Sagar Sandy this is log title by sagar sandy lets see how this is print",
+      title: "Web development bootcamp by Sagar Sandy this is long",
       author: "Web Developers boot camps",
       category: "Category 4",
     ),
