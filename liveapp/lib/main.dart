@@ -6,6 +6,7 @@ import 'package:liveapp/widgets/CoursesListBlockOneWidget.dart';
 import 'package:http/http.dart';
 import 'package:liveapp/widgets/CoursesListBlockTwoWidget.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,6 +38,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+
+  Future<void> setDiskStorage() async {
+    final diskStorage = await SharedPreferences.getInstance();
+
+    print(diskStorage.getInt('userId'));
+
+    diskStorage.setInt('userId', 492);
+
+    print(diskStorage.getInt('userId'));
+  }
+
   Future<List<Course>> getTrendingCourses() async {
     const url = "https://sagarsandy492.mock.pw/api/courses";
 
@@ -59,12 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
       setState(() {
         _trendingCourses = coursesData;
-//        _categoryCourses1 = coursesData;
-//        _categoryCourses1.shuffle();
-//        _categoryCourses2 = coursesData;
-//        _categoryCourses2.shuffle();
-//        _categoryCourses3 = coursesData;
-//        _categoryCourses3.shuffle();
       });
     } else {
       print("Something went wrong");
@@ -75,14 +82,22 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     getTrendingCourses();
+    setDiskStorage();
     super.initState();
   }
 
-//  List<Course> _categoryCourses1 = [];
-//
-//  List<Course> _categoryCourses2 = [];
-//
-//  List<Course> _categoryCourses3 = [];
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if (index == 2) {
+        appBarTitle = "My Profile";
+      } else if (index == 1) {
+        appBarTitle = "My Courses";
+      } else {
+        appBarTitle = "The Professor";
+      }
+    });
+  }
 
   List<Course> _trendingCourses = [
     Course(
@@ -153,21 +168,12 @@ class _MyHomePageState extends State<MyHomePage> {
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 200),
         onTap: (index) {
-          setState(() {
-            if (index == 2) {
-              appBarTitle = "My Profile";
-            } else if (index == 1) {
-              appBarTitle = "My Courses";
-            } else {
-              appBarTitle = "The Professor";
-            }
-          });
-          print(index);
+          _onItemTapped(index);
         },
       ),
       body: SingleChildScrollView(
         child: Container(
-//        color: Colors.blueGrey.withOpacity(0.7),
+//          color: Colors.blueGrey.withOpacity(0.7),
 //        color: Colors.white,
           color: Colors.cyan.withAlpha(10),
           child: Padding(

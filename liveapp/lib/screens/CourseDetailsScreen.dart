@@ -3,11 +3,18 @@ import 'package:flutter/widgets.dart';
 import 'package:liveapp/models/Content.dart';
 import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/models/Section.dart';
+import 'package:liveapp/screens/CurriculumScreen.dart';
 import 'package:liveapp/widgets/CourseDetailsCoverWidget.dart';
 
 class CourseDetailsScreen extends StatelessWidget {
   final Course course;
   CourseDetailsScreen(this.course);
+
+  void navigateToCurriculumScreen(context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => CurriculumScreen()));
+  }
+
   final List<Section> _courseSections = [
     Section(id: 1, title: "Introduction to symfony", contents: [
       Content(
@@ -146,9 +153,9 @@ class CourseDetailsScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 540,
+                height: 280,
+//                color: Colors.blueGrey,
                 child: ListView.builder(
-//                  physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.all(2),
                   itemCount: _courseSections.length,
                   itemBuilder: (context, i) {
@@ -172,6 +179,29 @@ class CourseDetailsScreen extends StatelessWidget {
                       ),
                     );
                   },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: GestureDetector(
+                  onTap: () {
+                    navigateToCurriculumScreen(context);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 55,
+                    child: Card(
+                      elevation: 20,
+                      child: Align(
+                        child: Text(
+                          "More Sections",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
