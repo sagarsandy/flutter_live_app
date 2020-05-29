@@ -75,7 +75,7 @@ class CourseBlockTwoWidget extends StatelessWidget {
                           child: Text(
                             course.author,
                             style: TextStyle(
-                                fontSize: 11.0,
+                                fontSize: 12.0,
                                 color: Color(0XFF010a43),
                                 fontStyle: FontStyle.italic),
                             overflow: TextOverflow.fade,
