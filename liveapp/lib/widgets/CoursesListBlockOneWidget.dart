@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/widgets/CourseBlockOneWidget.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class CoursesListBlockOneWidget extends StatelessWidget {
   final List<Course> coursesList;
@@ -15,20 +16,17 @@ class CoursesListBlockOneWidget extends StatelessWidget {
       child: coursesList.isEmpty
           ? Column(
               children: <Widget>[
-                Text(
-                  'Fetching courses...',
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 100,
-                  color: Colors.blueGrey,
-                  child: Image.network(
-                    '',
-                    fit: BoxFit.cover,
+                Center(
+                  child: Container(
+                    height: 200,
+                    child: ScalingText(
+                      "Loading..",
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
                   ),
-                )
+                ),
               ],
             )
           : ListView.builder(

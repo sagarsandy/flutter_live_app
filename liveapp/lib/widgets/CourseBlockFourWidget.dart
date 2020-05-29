@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/screens/CourseDetailsScreen.dart';
@@ -6,17 +7,11 @@ import 'package:percent_indicator/percent_indicator.dart';
 class CourseBlockFourWidget extends StatelessWidget {
   final Course course;
   CourseBlockFourWidget(this.course);
+  Random random = new Random();
 
   void navigateToCourseDetailsScreen(context) {
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => CourseDetailsScreen(course)));
-
-//    Navigator.pushReplacement(
-//      context,
-//      MaterialPageRoute(
-//        builder: (context) => CourseDetailsScreen(course),
-//      ),
-//    );
   }
 
   @override
@@ -73,7 +68,7 @@ class CourseBlockFourWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  course.author + "Bingo long title",
+                                  course.author,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(fontStyle: FontStyle.italic),
@@ -83,12 +78,12 @@ class CourseBlockFourWidget extends StatelessWidget {
                                       left: 0, right: 1, top: 10),
                                   child: LinearPercentIndicator(
                                     animation: true,
-                                    lineHeight: 15.0,
+                                    lineHeight: 10.0,
                                     animationDuration: 2000,
-                                    percent: 0.9,
-                                    center: Text("90%"),
+                                    percent: random.nextDouble(),
                                     linearStrokeCap: LinearStrokeCap.roundAll,
                                     progressColor: Color(0xFFC96FF7),
+                                    backgroundColor: Colors.white12,
                                   ),
                                 ),
                               ],
