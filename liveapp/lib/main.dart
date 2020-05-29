@@ -1,11 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:liveapp/models/Course.dart';
+import 'package:liveapp/screens/HomeScreen.dart';
 import 'package:liveapp/screens/SearchResultsScreen.dart';
 import 'package:liveapp/widgets/CourseBlockFourWidget.dart';
 import 'package:liveapp/widgets/CoursesListBlockOneWidget.dart';
-import 'package:http/http.dart';
 import 'package:liveapp/widgets/CoursesListBlockTwoWidget.dart';
+import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -219,80 +220,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget getGraphContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: SingleChildScrollView(
-        child: Container(
-//          color: Colors.blueGrey.withOpacity(0.7),
-//        color: Colors.white,
-          color: Colors.cyan.withAlpha(10),
-          child: Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Trending courses of the month",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0XFF010a43),
-                      ),
-                    ),
-                  ),
-                ),
-                CoursesListBlockOneWidget(_trendingCourses),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 1.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Top Courses in Development",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0XFF010a43),
-                      ),
-                    ),
-                  ),
-                ),
-                CoursesListBlockTwoWidget(_trendingCourses),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 1.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Best Courses in Digital Marketing",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0XFF010a43),
-                      ),
-                    ),
-                  ),
-                ),
-                CoursesListBlockTwoWidget(_trendingCourses),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 1.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Popular Courses in Productivity",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0XFF010a43),
-                      ),
-                    ),
-                  ),
-                ),
-                CoursesListBlockTwoWidget(_trendingCourses),
-              ],
-            ),
-          ),
-        ),
-      ),
+      child: HomeScreen(),
     );
   }
 
@@ -318,136 +246,6 @@ class _MyHomePageState extends State<MyHomePage>
     );
   }
 }
-
-//class BodyWidget extends StatefulWidget {
-//  @override
-//  State<StatefulWidget> createState() => BodyWidgetState();
-//}
-//
-//class BodyWidgetState extends State<BodyWidget>
-//    with SingleTickerProviderStateMixin<BodyWidget> {
-//  WidgetMarker selectedWidgetMarker = WidgetMarker.home;
-//  AnimationController _controller;
-//  Animation _animation;
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//    _controller =
-//        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-//    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
-//  }
-//
-//  @override
-//  void dispose() {
-//    super.dispose();
-//    _controller.dispose();
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Column(
-//      children: <Widget>[
-//        Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//          children: <Widget>[
-//            FlatButton(
-//              onPressed: () {
-//                setState(() {
-//                  selectedWidgetMarker = WidgetMarker.home;
-//                });
-//              },
-//              child: Text(
-//                "Graph",
-//                style: TextStyle(
-//                    color: (selectedWidgetMarker == WidgetMarker.home)
-//                        ? Colors.black
-//                        : Colors.black12),
-//              ),
-//            ),
-//            FlatButton(
-//              onPressed: () {
-//                setState(() {
-//                  selectedWidgetMarker = WidgetMarker.mycourses;
-//                });
-//              },
-//              child: Text("Stats",
-//                  style: TextStyle(
-//                      color: (selectedWidgetMarker == WidgetMarker.mycourses)
-//                          ? Colors.black
-//                          : Colors.black12)),
-//            ),
-//            FlatButton(
-//              onPressed: () {
-//                setState(() {
-//                  selectedWidgetMarker = WidgetMarker.account;
-//                });
-//              },
-//              child: Text("Info",
-//                  style: TextStyle(
-//                      color: (selectedWidgetMarker == WidgetMarker.account)
-//                          ? Colors.black
-//                          : Colors.black12)),
-//            ),
-//          ],
-//        ),
-//        FutureBuilder(
-//          future: _playAnimation(),
-//          builder: (BuildContext context, AsyncSnapshot snapshot) {
-//            return getCustomContainer();
-//          },
-//        )
-//      ],
-//    );
-//  }
-//
-//  _playAnimation() {
-//    _controller.reset();
-//    _controller.forward();
-//  }
-//
-//  Widget getCustomContainer() {
-//    switch (selectedWidgetMarker) {
-//      case WidgetMarker.home:
-//        return getGraphContainer();
-//      case WidgetMarker.mycourses:
-//        return getStatsContainer();
-//      case WidgetMarker.account:
-//        return getInfoContainer();
-//    }
-//    return getGraphContainer();
-//  }
-//
-//  Widget getGraphContainer() {
-//    return FadeTransition(
-//      opacity: _animation,
-//      child: Container(
-//        color: Colors.red,
-//        height: 200,
-//      ),
-//    );
-//  }
-//
-//  Widget getStatsContainer() {
-//    return FadeTransition(
-//      opacity: _animation,
-//      child: Container(
-//        color: Colors.green,
-//        height: 300,
-//      ),
-//    );
-//  }
-//
-//  Widget getInfoContainer() {
-//    return FadeTransition(
-//      opacity: _animation,
-//      child: Container(
-//        color: Colors.blue,
-//        height: 400,
-//      ),
-//    );
-//  }
-//}
 
 class SearchCourses extends SearchDelegate<String> {
   @override

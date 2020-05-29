@@ -85,7 +85,7 @@ class CourseBlockOneWidget extends StatelessWidget {
                           height: 25,
                         ),
                         Text(
-                          "\$" + course.price.toString(),
+                          "₹" + course.price.toString(),
                           style: TextStyle(
                             fontSize: 22.0,
                             color: Color(0XFF010a43),

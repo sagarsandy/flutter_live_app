@@ -109,7 +109,7 @@ class CourseBlockThreeWidget extends StatelessWidget {
                                       padding:
                                           const EdgeInsets.only(right: 8.0),
                                       child: Text(
-                                        "\$" + course.price.toString(),
+                                        "₹" + course.price.toString(),
                                         textAlign: TextAlign.end,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
