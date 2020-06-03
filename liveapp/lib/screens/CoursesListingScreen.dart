@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/widgets/CourseBlockThreeWidget.dart';
 
-class SearchResultsScreen extends StatelessWidget {
+class CoursesListingScreen extends StatelessWidget {
   final String title;
-  SearchResultsScreen(this.title);
+  CoursesListingScreen(this.title);
 
   final List<Course> _serachedCourses = [
     Course(

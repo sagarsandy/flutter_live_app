@@ -1,17 +1,17 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:liveapp/models/Course.dart';
-import 'package:liveapp/screens/CourseDetailsScreen.dart';
+import 'package:liveapp/screens/CurriculumScreen.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class CourseBlockFourWidget extends StatelessWidget {
   final Course course;
   CourseBlockFourWidget(this.course);
-  Random random = new Random();
+  final Random random = new Random();
 
-  void navigateToCourseDetailsScreen(context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => CourseDetailsScreen(course)));
+  void navigateToCurriculumScreen(context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => CurriculumScreen(true, course)));
   }
 
   @override
@@ -20,7 +20,7 @@ class CourseBlockFourWidget extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: GestureDetector(
         onTap: () {
-          navigateToCourseDetailsScreen(context);
+          navigateToCurriculumScreen(context);
         },
         child: Card(
           elevation: 20,
@@ -34,14 +34,14 @@ class CourseBlockFourWidget extends StatelessWidget {
                   flex: 3,
                   child: Image.network(
                     course.image,
-                    fit: BoxFit.fitHeight,
+                    fit: BoxFit.fill,
                     height: 100,
                   ),
                 ),
                 Expanded(
                   flex: 7,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 3, top: 3, right: 2),
+                    padding: const EdgeInsets.only(left: 5, top: 3, right: 2),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

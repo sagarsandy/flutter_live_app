@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liveapp/screens/SearchResultsScreen.dart';
+import 'package:liveapp/screens/CoursesListingScreen.dart';
 
 class SearchDelegateService extends SearchDelegate<String> {
   @override
@@ -81,7 +81,7 @@ class SearchDelegateService extends SearchDelegate<String> {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
-                      SearchResultsScreen(suggestionList[index])));
+                      CoursesListingScreen(suggestionList[index])));
             },
             leading: Icon(Icons.location_city),
             title: Text(suggestionList[index]),
@@ -95,6 +95,6 @@ class SearchDelegateService extends SearchDelegate<String> {
   @override
   void showResults(BuildContext context) {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => SearchResultsScreen(query)));
+        MaterialPageRoute(builder: (context) => CoursesListingScreen(query)));
   }
 }

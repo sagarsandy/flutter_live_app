@@ -1,9 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/screens/ProfileScreen.dart';
-import 'package:liveapp/screens/SearchResultsScreen.dart';
 import 'package:liveapp/services/SearchDelegateService.dart';
 import 'package:liveapp/widgets/CourseBlockFourWidget.dart';
 import 'package:http/http.dart';
@@ -29,6 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+//        textTheme:
+//            GoogleFonts.robotoCondensedTextTheme(Theme.of(context).textTheme),
       ),
       home: MyHomePage(title: 'Money Heist'),
     );

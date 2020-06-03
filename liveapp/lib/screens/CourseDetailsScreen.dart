@@ -5,7 +5,7 @@ import 'package:liveapp/models/Content.dart';
 import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/models/Section.dart';
 import 'package:liveapp/screens/CurriculumScreen.dart';
-import 'package:liveapp/screens/SearchResultsScreen.dart';
+import 'package:liveapp/screens/CoursesListingScreen.dart';
 import 'package:liveapp/widgets/AuthorInfoWidget.dart';
 import 'package:liveapp/widgets/ButtonWidgetOne.dart';
 import 'package:liveapp/widgets/CourseDetailsCurriculumWidget.dart';
@@ -24,13 +24,13 @@ class CourseDetailsScreen extends StatefulWidget {
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   void navigateToCurriculumScreen(context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => CurriculumScreen()));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => CurriculumScreen(false, widget.course)));
   }
 
   void navigateToSearchResultsScreen(context, authorName) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => SearchResultsScreen(authorName)));
+        builder: (context) => CoursesListingScreen(authorName)));
   }
 
   final List<Section> _courseSections = [
@@ -325,73 +325,67 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
               child: Container(
                 width: double.infinity,
                 color: Colors.white24,
-                child: GestureDetector(
-                  onTap: () {
-                    navigateToCurriculumScreen(context);
-                  },
-                  child: Card(
-                    elevation: 10,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          AuthorInfoWidget(
-                            Author(
-                                id: 1,
-                                name: "Sagar Sandy",
-                                image:
-                                    "https://s.gravatar.com/avatar/5334ee660503852bb5c2f4cb7240e366?s=80",
-                                coursesCount: 4,
-                                bio: "Binog"),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0, top: 10),
-                            child: Text(
-                              "Bio:",
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
+                child: Card(
+                  elevation: 10,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        AuthorInfoWidget(
+                          Author(
+                              id: 1,
+                              name: "Sagar Sandy",
+                              image:
+                                  "https://s.gravatar.com/avatar/5334ee660503852bb5c2f4cb7240e366?s=80",
+                              coursesCount: 4,
+                              bio: "Binog"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, top: 10),
+                          child: Text(
+                            "Bio:",
+                            style: TextStyle(
+                              fontSize: 20,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5.0, left: 8.0),
-                            child: Text(
-                              courseDescription,
-                              maxLines: authorDescTextShowFlag ? null : 8,
-                              textAlign: TextAlign.start,
-                              style: TextStyle(fontSize: 15),
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0, left: 8.0),
+                          child: Text(
+                            courseDescription,
+                            maxLines: authorDescTextShowFlag ? null : 8,
+                            textAlign: TextAlign.start,
+                            style: TextStyle(fontSize: 15),
                           ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                authorDescTextShowFlag =
-                                    !authorDescTextShowFlag;
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                authorDescTextShowFlag
-                                    ? Text(
-                                        "Hide",
-                                        style: TextStyle(color: Colors.blue),
-                                      )
-                                    : Text("Read More",
-                                        style: TextStyle(color: Colors.blue))
-                              ],
-                            ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              authorDescTextShowFlag = !authorDescTextShowFlag;
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              authorDescTextShowFlag
+                                  ? Text(
+                                      "Hide",
+                                      style: TextStyle(color: Colors.blue),
+                                    )
+                                  : Text("Read More",
+                                      style: TextStyle(color: Colors.blue))
+                            ],
                           ),
-                          ButtonWidgetOne(
-                            title: "View Courses",
-                            onTap: () {
-                              navigateToSearchResultsScreen(
-                                  context, "Sagar Sandy");
-                            },
-                          ),
-                        ],
-                      ),
+                        ),
+                        ButtonWidgetOne(
+                          title: "View Courses",
+                          onTap: () {
+                            navigateToSearchResultsScreen(
+                                context, "Sagar Sandy");
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
