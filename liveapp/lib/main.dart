@@ -2,14 +2,14 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liveapp/models/Course.dart';
+import 'package:liveapp/screens/CoursesListingScreen.dart';
 import 'package:liveapp/screens/ProfileScreen.dart';
 import 'package:liveapp/services/SearchDelegateService.dart';
+import 'package:liveapp/services/WebServiceCalls.dart';
 import 'package:liveapp/widgets/CourseBlockFourWidget.dart';
-import 'package:http/http.dart';
 import 'package:liveapp/widgets/CoursesListBlockOneWidget.dart';
 import 'package:liveapp/widgets/CoursesListBlockTwoWidget.dart';
 import 'package:liveapp/widgets/HomePageTitlePadding.dart';
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum WidgetMarker { home, purchased, profile }
@@ -57,152 +57,58 @@ class _MyHomePageState extends State<MyHomePage>
     print(diskStorage.getInt('userId'));
   }
 
-  List<Course> _trendingCourses = [
-    Course(
-      id: 1,
-      image: "https://i.picsum.photos/id/1/150/150.jpg",
-      price: 11,
-      title: "Introduction to docker and docking",
-      author: "Docker Mastery",
-      category: "Category 1",
-    ),
-    Course(
-      id: 2,
-      image: "https://i.picsum.photos/id/2/150/150.jpg",
-      price: 21,
-      title: "Jump to javascript in 60 days as a master in programming",
-      author: "Javascript Learners Library",
-      category: "Category 2",
-    ),
-    Course(
-      id: 3,
-      image: "https://i.picsum.photos/id/3/150/150.jpg",
-      price: 31,
-      title: "The ultimate guide to programers and techies",
-      author: "Programming Library",
-      category: "Category 3",
-    ),
-    Course(
-      id: 4,
-      image: "https://i.picsum.photos/id/4/150/150.jpg",
-      price: 41,
-      title: "Web development bootcamp by Sagar Sandy this is long",
-      author: "Web Developers boot camps",
-      category: "Category 4",
-    ),
-    Course(
-      id: 5,
-      image: "https://i.picsum.photos/id/5/150/150.jpg",
-      price: 51,
-      title: "Feedback sessions by feedback masters",
-      author: "Feedback foliers",
-      category: "Category 5",
-    ),
-  ];
+  Future getTrendingCourses() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/courses");
 
-  Future<List<Course>> getTrendingCourses() async {
-    const url = "https://sagarsandy492.mock.pw/api/courses";
-    final response = await get(url);
-    List<Course> coursesData = [];
-    if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body);
-      for (var c in jsonData) {
-        Course course = Course(
-            id: c["id"],
-            title: c["title"],
-            image: c["image"],
-            price: c["price"],
-            author: c["author"]);
-        coursesData.add(course);
-      }
-      setState(() {
-        coursesData.shuffle();
-        _trendingCourses = coursesData;
-      });
-    } else {
-      print("Something went wrong");
-    }
+    setState(() {
+      _trendingCourses = data;
+      _trendingCourses.shuffle();
+    });
   }
 
-  Future<List<Course>> getCategory1Courses() async {
-    const url = "https://sagarsandy492.mock.pw/api/courses";
-    final response = await get(url);
-    List<Course> coursesData = [];
-    if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body);
-      for (var c in jsonData) {
-        Course course = Course(
-            id: c["id"],
-            title: c["title"],
-            image: c["image"],
-            price: c["price"],
-            author: c["author"]);
-        coursesData.add(course);
-      }
-      setState(() {
-        _categoryCourses1 = coursesData;
-        _categoryCourses1.shuffle();
-      });
-    } else {
-      print("Something went wrong");
-    }
+  Future getCategoryOneCourses() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/searchcourses");
+
+    setState(() {
+      _categoryCourses1 = data;
+      _categoryCourses1.shuffle();
+    });
   }
 
-  Future<List<Course>> getCategory2Courses() async {
-    const url = "https://sagarsandy492.mock.pw/api/courses";
-    final response = await get(url);
-    List<Course> coursesData = [];
-    if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body);
-      for (var c in jsonData) {
-        Course course = Course(
-            id: c["id"],
-            title: c["title"],
-            image: c["image"],
-            price: c["price"],
-            author: c["author"]);
-        coursesData.add(course);
-      }
-      setState(() {
-        _categoryCourses2 = coursesData;
-        _categoryCourses2.shuffle();
-      });
-    } else {
-      print("Something went wrong");
-    }
+  Future getCategoryTwoCourses() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/courses");
+
+    setState(() {
+      _categoryCourses2 = data;
+      _categoryCourses2.shuffle();
+    });
   }
 
-  Future<List<Course>> getCategory3Courses() async {
-    const url = "https://sagarsandy492.mock.pw/api/courses";
-    final response = await get(url);
-    List<Course> coursesData = [];
-    if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body);
-      for (var c in jsonData) {
-        Course course = Course(
-            id: c["id"],
-            title: c["title"],
-            image: c["image"],
-            price: c["price"],
-            author: c["author"]);
-        coursesData.add(course);
-      }
-      setState(() {
-        _categoryCourses3 = coursesData;
-        _categoryCourses3.shuffle();
-      });
-    } else {
-      print("Something went wrong");
-    }
+  Future getCategoryThreeCourses() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/searchcourses");
+
+    setState(() {
+      _categoryCourses3 = data;
+      _categoryCourses3.shuffle();
+    });
+  }
+
+  void navigateToCoursesListingScreen(context, title) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => CoursesListingScreen(title)));
   }
 
   var appBarTitle = "The Professor";
   @override
   void initState() {
     getTrendingCourses();
-    getCategory1Courses();
-    getCategory2Courses();
-    getCategory3Courses();
+    getCategoryOneCourses();
+    getCategoryTwoCourses();
+    getCategoryThreeCourses();
     setDiskStorage();
     super.initState();
     _controller =
@@ -232,6 +138,7 @@ class _MyHomePageState extends State<MyHomePage>
     });
   }
 
+  List<Course> _trendingCourses = [];
   List<Course> _categoryCourses1 = [];
   List<Course> _categoryCourses2 = [];
   List<Course> _categoryCourses3 = [];
@@ -239,7 +146,6 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      backgroundColor: Colors.cyan.withAlpha(10),
       appBar: AppBar(
         title: Text(appBarTitle),
         backgroundColor: Color(0xFFC96FF7),
@@ -321,16 +227,41 @@ class _MyHomePageState extends State<MyHomePage>
         child: Container(
           color: Colors.cyan.withAlpha(10),
           child: Padding(
-            padding: EdgeInsets.only(left: 15),
+            padding: EdgeInsets.only(left: 10),
             child: Column(
               children: <Widget>[
-                HomePageTitlePadding("Trending Courses", 15.0),
+                HomePageTitlePadding(
+                  title: "Trending Courses",
+                  verticalPadding: 15.0,
+                  onTap: () {
+                    navigateToCoursesListingScreen(context, "Trending Courses");
+                  },
+                ),
                 CoursesListBlockOneWidget(_trendingCourses),
-                HomePageTitlePadding("Top Courses in Development", 1.0),
+                HomePageTitlePadding(
+                  title: "Top Courses in Development",
+                  verticalPadding: 1.0,
+                  onTap: () {
+                    navigateToCoursesListingScreen(context, "Development");
+                  },
+                ),
                 CoursesListBlockTwoWidget(_categoryCourses1),
-                HomePageTitlePadding("Best Courses in Digital Marketing", 1.0),
+                HomePageTitlePadding(
+                  title: "Best Courses in Digital Marketing",
+                  verticalPadding: 1.0,
+                  onTap: () {
+                    navigateToCoursesListingScreen(
+                        context, "Digital Marketing");
+                  },
+                ),
                 CoursesListBlockTwoWidget(_categoryCourses2),
-                HomePageTitlePadding("Popular Courses in Productivity", 1.0),
+                HomePageTitlePadding(
+                  title: "Popular Courses in Productivity",
+                  verticalPadding: 1.0,
+                  onTap: () {
+                    navigateToCoursesListingScreen(context, "Productivity");
+                  },
+                ),
                 CoursesListBlockTwoWidget(_categoryCourses3),
               ],
             ),
