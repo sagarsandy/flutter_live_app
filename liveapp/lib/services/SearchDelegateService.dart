@@ -2,34 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:liveapp/screens/CoursesListingScreen.dart';
 
 class SearchDelegateService extends SearchDelegate<String> {
+  List categories = [];
+  SearchDelegateService(this.categories);
+
   @override
   // TODO: implement searchFieldLabel
   String get searchFieldLabel => "Enter a title";
   @override
   // TODO: implement textInputAction
   TextInputAction get textInputAction => TextInputAction.search;
-
-  final categories = [
-    "Select",
-    "Development",
-    "Marketing",
-    "Productivity",
-    "Business",
-    "Accounting",
-    "LifeStyle",
-    "Photography",
-    "Music",
-    "Health",
-    "Productivity",
-  ];
-
-  final recentCategories = [
-    "Select",
-    "Development",
-    "Marketing",
-    "Productivity",
-    "Business",
-  ];
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -67,7 +48,6 @@ class SearchDelegateService extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-//    final suggestionList = query.isEmpty ? recentCategories : categories;
     final suggestionList = categories;
 
     return ListView.builder(
@@ -81,10 +61,10 @@ class SearchDelegateService extends SearchDelegate<String> {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
-                      CoursesListingScreen(suggestionList[index])));
+                      CoursesListingScreen(suggestionList[index]['title'])));
             },
-            leading: Icon(Icons.location_city),
-            title: Text(suggestionList[index]),
+            leading: Icon(Icons.group_work),
+            title: Text(suggestionList[index]['title']),
           );
         }
       },

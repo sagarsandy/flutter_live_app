@@ -15,6 +15,7 @@ class CoursesListingScreen extends StatefulWidget {
 class _CoursesListingScreenState extends State<CoursesListingScreen> {
   List<Course> _searchedCourses = [];
   var _scrollController = ScrollController();
+  bool showLoader = false;
 
   Future getCoursesData() async {
     final data = await WebServiceCalls()
@@ -23,6 +24,22 @@ class _CoursesListingScreenState extends State<CoursesListingScreen> {
     setState(() {
       _searchedCourses = data;
     });
+  }
+
+  Future getMoreCoursesData() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/searchcourses");
+
+    setState(() {
+      _searchedCourses = _searchedCourses + data;
+      showLoader = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,8 +51,10 @@ class _CoursesListingScreenState extends State<CoursesListingScreen> {
           // Top
           print("Top Scroller");
         } else {
-          // Bottom
-          print("Bottom Scroller");
+          setState(() {
+            showLoader = true;
+            getMoreCoursesData();
+          });
         }
       }
     });
@@ -64,12 +83,34 @@ class _CoursesListingScreenState extends State<CoursesListingScreen> {
                 ),
               ),
             )
-          : ListView.builder(
+          : CustomScrollView(
               controller: _scrollController,
-              itemBuilder: (ctx, index) {
-                return CourseBlockThreeWidget(_searchedCourses[index]);
-              },
-              itemCount: _searchedCourses.length,
+              slivers: <Widget>[
+                SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    return CourseBlockThreeWidget(
+                      _searchedCourses[index],
+                    );
+                  }, childCount: _searchedCourses.length),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    child: Center(
+                      child: showLoader
+                          ? Container(
+                              height: 100,
+                              child: ScalingText(
+                                "Loading..",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                ),
+                              ),
+                            )
+                          : null,
+                    ),
+                  ),
+                ),
+              ],
             ),
     );
   }

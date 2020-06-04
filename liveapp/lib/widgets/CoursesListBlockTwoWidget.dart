@@ -11,7 +11,6 @@ class CoursesListBlockTwoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-//      color: Colors.grey,
       height: 240,
       child: coursesList.isEmpty
           ? Column(

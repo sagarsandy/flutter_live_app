@@ -6,11 +6,13 @@ import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/models/Section.dart';
 import 'package:liveapp/screens/CurriculumScreen.dart';
 import 'package:liveapp/screens/CoursesListingScreen.dart';
+import 'package:liveapp/services/WebServiceCalls.dart';
 import 'package:liveapp/widgets/AuthorInfoWidget.dart';
 import 'package:liveapp/widgets/ButtonWidgetOne.dart';
 import 'package:liveapp/widgets/CourseDetailsCurriculumWidget.dart';
 import 'package:liveapp/widgets/CourseDetailsSliverAppBar.dart';
 import 'package:liveapp/widgets/CourseDetailsVideoWidget.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
@@ -33,148 +35,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         builder: (context) => CoursesListingScreen(authorName)));
   }
 
-  final List<Section> _courseSections = [
-    Section(id: 1, title: "Introduction to symfony", contents: [
-      Content(
-          id: 1,
-          title:
-              "Introduction2 to symfony and mastering symfony is less than 5 minutes",
-          type: "video",
-          hasAccess: true),
-      Content(
-          id: 2,
-          title:
-              "Introduction2 to react and mastering react is less than 15 minutes",
-          type: "text",
-          hasAccess: false),
-      Content(
-          id: 3,
-          title:
-              "Introduction2 to nodeJs and mastering nodeJs is less than 25 minutes",
-          type: "audio",
-          hasAccess: true),
-      Content(
-          id: 4,
-          title:
-              "Introduction2 to TypeScript and mastering TypeScript is less than 35 minutes",
-          type: "video",
-          hasAccess: false),
-    ]),
-    Section(id: 1, title: "Introduction to symfony", contents: [
-      Content(
-          id: 1,
-          title:
-              "Introduction2 to symfony and mastering symfony is less than 5 minutes",
-          type: "video",
-          hasAccess: true),
-      Content(
-          id: 2,
-          title:
-              "Introduction2 to react and mastering react is less than 15 minutes",
-          type: "text",
-          hasAccess: false),
-      Content(
-          id: 3,
-          title:
-              "Introduction2 to nodeJs and mastering nodeJs is less than 25 minutes",
-          type: "audio",
-          hasAccess: true),
-      Content(
-          id: 4,
-          title:
-              "Introduction2 to TypeScript and mastering TypeScript is less than 35 minutes",
-          type: "video",
-          hasAccess: false),
-    ]),
-    Section(
-        id: 2,
-        title: "Mastering react in just less than 5 minutes",
-        contents: [
-          Content(
-              id: 1,
-              title:
-                  "Introduction3 to symfony and mastering symfony is less than 5 minutes",
-              type: "video",
-              hasAccess: true),
-          Content(
-              id: 2,
-              title:
-                  "Introduction3 to react and mastering react is less than 15 minutes",
-              type: "text",
-              hasAccess: false),
-          Content(
-              id: 3,
-              title:
-                  "Introduction3 to nodeJs and mastering nodeJs is less than 25 minutes",
-              type: "audio",
-              hasAccess: true),
-          Content(
-              id: 4,
-              title:
-                  "Introduction3 to TypeScript and mastering TypeScript is less than 35 minutes",
-              type: "video",
-              hasAccess: false),
-        ]),
-    Section(
-        id: 3,
-        title: "Mastering nodeJS in just less than 5 minutes",
-        contents: [
-          Content(
-              id: 1,
-              title:
-                  "Introduction4 to symfony and mastering symfony is less than 5 minutes",
-              type: "video",
-              hasAccess: true),
-          Content(
-              id: 2,
-              title:
-                  "Introduction4 to react and mastering react is less than 15 minutes",
-              type: "text",
-              hasAccess: false),
-          Content(
-              id: 3,
-              title:
-                  "Introduction4 to nodeJs and mastering nodeJs is less than 25 minutes",
-              type: "audio",
-              hasAccess: true),
-          Content(
-              id: 4,
-              title:
-                  "Introduction4 to TypeScript and mastering TypeScript is less than 35 minutes",
-              type: "video",
-              hasAccess: false),
-        ]),
-    Section(
-        id: 4,
-        title: "Mastering TypeScript in just less than 5 minutes",
-        contents: [
-          Content(
-              id: 1,
-              title:
-                  "Introduction5 to symfony and mastering symfony is less than 5 minutes",
-              type: "video",
-              hasAccess: true),
-          Content(
-              id: 2,
-              title:
-                  "Introduction5 to react and mastering react is less than 15 minutes",
-              type: "text",
-              hasAccess: false),
-          Content(
-              id: 3,
-              title:
-                  "Introduction5 to nodeJs and mastering nodeJs is less than 25 minutes",
-              type: "audio",
-              hasAccess: true),
-          Content(
-              id: 4,
-              title:
-                  "Introduction5 to TypeScript and mastering TypeScript is less than 35 minutes",
-              type: "video",
-              hasAccess: false),
-        ]),
-  ];
-
   ScrollController _scrollController;
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
@@ -183,12 +43,43 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   bool hideTitle = false;
   bool descTextShowFlag = false;
   bool authorDescTextShowFlag = false;
+  bool showMoreSectionsButton = true;
+  bool authorInfoLoaded = false;
   String courseDescription =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+
+  Future getCourseCurriculumData() async {
+    final data = await WebServiceCalls().getCourseCurriculum(
+        "https://sagarsandy492.mock.pw/api/shortcurriculum");
+
+    if (data != null) {
+      setState(() {
+        _courseSections = _courseSections + data["sections"];
+        if (data["totalSections"] < 5) {
+          showMoreSectionsButton = false;
+        }
+      });
+    }
+  }
+
+  Future getCourseAuthorData() async {
+    final authorData = await WebServiceCalls()
+        .getCourseAuthor("https://sagarsandy492.mock.pw/api/author");
+
+    if (authorData != null) {
+      setState(() {
+        _courseAuthor = authorData;
+        authorInfoLoaded = true;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+
+    getCourseCurriculumData();
+    getCourseAuthorData();
 
     _videoPlayerController = VideoPlayerController.network(
       'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
@@ -232,6 +123,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
     super.dispose();
   }
+
+  List<Section> _courseSections = [
+    Section(id: 99999999, title: "unknown", contents: [])
+  ];
+
+  Author _courseAuthor;
 
   @override
   Widget build(BuildContext context) {
@@ -311,12 +208,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           ),
           CourseDetailsCurriculumWidget(_courseSections),
           SliverToBoxAdapter(
-            child: ButtonWidgetOne(
-              title: "View More Sections",
-              onTap: () {
-                navigateToCurriculumScreen(context);
-              },
-            ),
+            child: showMoreSectionsButton
+                ? ButtonWidgetOne(
+                    title: "View More Sections",
+                    onTap: () {
+                      navigateToCurriculumScreen(context);
+                    },
+                  )
+                : null,
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -329,64 +228,74 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   elevation: 10,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        AuthorInfoWidget(
-                          Author(
-                              id: 1,
-                              name: "Sagar Sandy",
-                              image:
-                                  "https://s.gravatar.com/avatar/5334ee660503852bb5c2f4cb7240e366?s=80",
-                              coursesCount: 4,
-                              bio: "Binog"),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0, top: 10),
-                          child: Text(
-                            "Bio:",
-                            style: TextStyle(
-                              fontSize: 20,
+                    child: authorInfoLoaded
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              AuthorInfoWidget(
+                                _courseAuthor,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, top: 10),
+                                child: Text(
+                                  "Bio:",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5.0, left: 8.0),
+                                child: Text(
+                                  _courseAuthor.bio,
+                                  maxLines: authorDescTextShowFlag ? null : 8,
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    authorDescTextShowFlag =
+                                        !authorDescTextShowFlag;
+                                  });
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    authorDescTextShowFlag
+                                        ? Text(
+                                            "Hide",
+                                            style:
+                                                TextStyle(color: Colors.blue),
+                                          )
+                                        : Text("Read More",
+                                            style:
+                                                TextStyle(color: Colors.blue))
+                                  ],
+                                ),
+                              ),
+                              ButtonWidgetOne(
+                                title: "View Courses",
+                                onTap: () {
+                                  navigateToSearchResultsScreen(
+                                      context, "Sagar Sandy");
+                                },
+                              ),
+                            ],
+                          )
+                        : Center(
+                            child: Container(
+                              height: 200,
+                              child: ScalingText(
+                                "Loading Author..",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0, left: 8.0),
-                          child: Text(
-                            courseDescription,
-                            maxLines: authorDescTextShowFlag ? null : 8,
-                            textAlign: TextAlign.start,
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              authorDescTextShowFlag = !authorDescTextShowFlag;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              authorDescTextShowFlag
-                                  ? Text(
-                                      "Hide",
-                                      style: TextStyle(color: Colors.blue),
-                                    )
-                                  : Text("Read More",
-                                      style: TextStyle(color: Colors.blue))
-                            ],
-                          ),
-                        ),
-                        ButtonWidgetOne(
-                          title: "View Courses",
-                          onTap: () {
-                            navigateToSearchResultsScreen(
-                                context, "Sagar Sandy");
-                          },
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ),

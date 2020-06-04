@@ -97,6 +97,15 @@ class _MyHomePageState extends State<MyHomePage>
     });
   }
 
+  Future getCategoriesData() async {
+    final data = await WebServiceCalls()
+        .getCategories("https://sagarsandy492.mock.pw/api/categories");
+
+    setState(() {
+      _categories = data;
+    });
+  }
+
   void navigateToCoursesListingScreen(context, title) {
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => CoursesListingScreen(title)));
@@ -109,6 +118,7 @@ class _MyHomePageState extends State<MyHomePage>
     getCategoryOneCourses();
     getCategoryTwoCourses();
     getCategoryThreeCourses();
+    getCategoriesData();
     setDiskStorage();
     super.initState();
     _controller =
@@ -142,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage>
   List<Course> _categoryCourses1 = [];
   List<Course> _categoryCourses2 = [];
   List<Course> _categoryCourses3 = [];
+  List _categories = [];
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +164,9 @@ class _MyHomePageState extends State<MyHomePage>
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: SearchDelegateService());
+              showSearch(
+                  context: context,
+                  delegate: SearchDelegateService(_categories));
             },
           ),
         ],
