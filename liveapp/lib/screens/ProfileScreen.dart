@@ -10,6 +10,14 @@ import 'package:liveapp/widgets/SignUpWidget.dart';
 import 'package:liveapp/widgets/UpdateProfileWidget.dart';
 
 class ProfileScreen extends StatefulWidget {
+  bool isUserLoggedIn;
+  final List<Transaction> userTransactions;
+  ProfileScreen({
+    Key key,
+    this.isUserLoggedIn,
+    this.userTransactions,
+  }) : super(key: key);
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -62,6 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+//    _profileStackWidgetIndex = widget.isUserLoggedIn ? 3 : 0;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -218,6 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     tappedSignOutButton: () {
                       setState(() {
                         _profileStackWidgetIndex = 0;
+//                        widget.isUserLoggedIn = false;
                       });
                     },
                   ),

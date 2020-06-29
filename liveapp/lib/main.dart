@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liveapp/models/Course.dart';
+import 'package:liveapp/models/Transaction.dart';
 import 'package:liveapp/screens/CoursesListingScreen.dart';
 import 'package:liveapp/screens/ProfileScreen.dart';
 import 'package:liveapp/services/SearchDelegateService.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+//        textTheme: TextTheme(
+//          bodyText1: GoogleFonts.roboto(fontSize: 32),
+//        ),
 //        textTheme:
 //            GoogleFonts.robotoCondensedTextTheme(Theme.of(context).textTheme),
       ),
@@ -49,67 +53,13 @@ class _MyHomePageState extends State<MyHomePage>
   AnimationController _controller;
   Animation _animation;
   int _selectedIndex = 0;
-
-  Future<void> setDiskStorage() async {
-    final diskStorage = await SharedPreferences.getInstance();
-    print(diskStorage.getInt('userId'));
-    diskStorage.setInt('userId', 492);
-    print(diskStorage.getInt('userId'));
-  }
-
-  Future getTrendingCourses() async {
-    final data = await WebServiceCalls()
-        .getCategoryCourses("https://sagarsandy492.mock.pw/api/courses");
-
-    setState(() {
-      _trendingCourses = data;
-      _trendingCourses.shuffle();
-    });
-  }
-
-  Future getCategoryOneCourses() async {
-    final data = await WebServiceCalls()
-        .getCategoryCourses("https://sagarsandy492.mock.pw/api/searchcourses");
-
-    setState(() {
-      _categoryCourses1 = data;
-      _categoryCourses1.shuffle();
-    });
-  }
-
-  Future getCategoryTwoCourses() async {
-    final data = await WebServiceCalls()
-        .getCategoryCourses("https://sagarsandy492.mock.pw/api/courses");
-
-    setState(() {
-      _categoryCourses2 = data;
-      _categoryCourses2.shuffle();
-    });
-  }
-
-  Future getCategoryThreeCourses() async {
-    final data = await WebServiceCalls()
-        .getCategoryCourses("https://sagarsandy492.mock.pw/api/searchcourses");
-
-    setState(() {
-      _categoryCourses3 = data;
-      _categoryCourses3.shuffle();
-    });
-  }
-
-  Future getCategoriesData() async {
-    final data = await WebServiceCalls()
-        .getCategories("https://sagarsandy492.mock.pw/api/categories");
-
-    setState(() {
-      _categories = data;
-    });
-  }
-
-  void navigateToCoursesListingScreen(context, title) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => CoursesListingScreen(title)));
-  }
+  bool isUserLoggedIn = false;
+  List<Course> _trendingCourses = [];
+  List<Course> _categoryCourses1 = [];
+  List<Course> _categoryCourses2 = [];
+  List<Course> _categoryCourses3 = [];
+  List<Transaction> _userTransactions = [];
+  List _categories = [];
 
   var appBarTitle = "The Professor";
   @override
@@ -119,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage>
     getCategoryTwoCourses();
     getCategoryThreeCourses();
     getCategoriesData();
-    setDiskStorage();
+    getUserDetailsData();
     super.initState();
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
@@ -147,12 +97,6 @@ class _MyHomePageState extends State<MyHomePage>
       }
     });
   }
-
-  List<Course> _trendingCourses = [];
-  List<Course> _categoryCourses1 = [];
-  List<Course> _categoryCourses2 = [];
-  List<Course> _categoryCourses3 = [];
-  List _categories = [];
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +173,10 @@ class _MyHomePageState extends State<MyHomePage>
   Widget getProfileContainer() {
     return FadeTransition(
       opacity: _animation,
-      child: ProfileScreen(),
+      child: ProfileScreen(
+        isUserLoggedIn: isUserLoggedIn,
+        userTransactions: _userTransactions,
+      ),
     );
   }
 
@@ -282,5 +229,71 @@ class _MyHomePageState extends State<MyHomePage>
         ),
       ),
     );
+  }
+
+  Future<void> getUserDetailsData() async {
+    final diskStorage = await SharedPreferences.getInstance();
+    if (diskStorage.getInt('userId') == null) {
+      isUserLoggedIn = false;
+    } else {
+      isUserLoggedIn = true;
+    }
+//    print(diskStorage.getInt('userId'));
+//    diskStorage.setInt('userId', 492);
+//    print(diskStorage.getInt('userId'));
+  }
+
+  Future getTrendingCourses() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/courses");
+
+    setState(() {
+      _trendingCourses = data;
+      _trendingCourses.shuffle();
+    });
+  }
+
+  Future getCategoryOneCourses() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/searchcourses");
+
+    setState(() {
+      _categoryCourses1 = data;
+      _categoryCourses1.shuffle();
+    });
+  }
+
+  Future getCategoryTwoCourses() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/courses");
+
+    setState(() {
+      _categoryCourses2 = data;
+      _categoryCourses2.shuffle();
+    });
+  }
+
+  Future getCategoryThreeCourses() async {
+    final data = await WebServiceCalls()
+        .getCategoryCourses("https://sagarsandy492.mock.pw/api/searchcourses");
+
+    setState(() {
+      _categoryCourses3 = data;
+      _categoryCourses3.shuffle();
+    });
+  }
+
+  Future getCategoriesData() async {
+    final data = await WebServiceCalls()
+        .getCategories("https://sagarsandy492.mock.pw/api/categories");
+
+    setState(() {
+      _categories = data;
+    });
+  }
+
+  void navigateToCoursesListingScreen(context, title) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => CoursesListingScreen(title)));
   }
 }

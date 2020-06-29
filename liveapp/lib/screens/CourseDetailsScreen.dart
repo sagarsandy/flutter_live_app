@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liveapp/models/Author.dart';
-import 'package:liveapp/models/Content.dart';
 import 'package:liveapp/models/Course.dart';
 import 'package:liveapp/models/Section.dart';
 import 'package:liveapp/screens/CurriculumScreen.dart';
